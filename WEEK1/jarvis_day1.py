@@ -4,6 +4,5 @@
 
 def jarvis(command):
     print(f"Processing: {command}")
-    return "Jarvis online. Learning in progress."
-
+    return "Jarvis online. Version 2 activated."
 print(jarvis("Hello Jarvis"))
