@@ -14,6 +14,7 @@ def jarvis_respond(command):
         return f"Current time is {datetime.datetime.now().strftime('%H:%M')}"
     elif "bye" in command or "exit" in command:
         return "Goodbye. Jarvis shutting down."
+    
     else:
         return f"I heard you say: '{command}'. I am still learning to respond to this."
 
