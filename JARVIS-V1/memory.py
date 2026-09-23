@@ -19,3 +19,24 @@ SYSTEM_PROMPT = {
     )
 }
 
+
+def load_memory():
+    if os.path.exists(MEMORY_FILE):
+        with open(MEMORY_FILE, "r") as f:
+            return json.load(f)
+    return [SYSTEM_PROMPT]
+
+
+def save_memory(conversation):
+    with open(MEMORY_FILE, "w") as f:
+        json.dump(conversation, f, indent=2)
+
+
+def add_message(conversation, role, content, tool_call_id=None, tool_calls=None):
+    msg = {"role": role, "content": content}
+    if tool_call_id:
+        msg["tool_call_id"] = tool_call_id
+    if tool_calls:
+        msg["tool_calls"] = tool_calls
+    conversation.append(msg)
+    return conversation
