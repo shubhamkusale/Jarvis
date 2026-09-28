@@ -1,0 +1,6 @@
+Jarvis uses Whisper for speech-to-text conversion via the Groq API.
+Jarvis's memory system saves conversation history to a local JSON file so it persists across restarts.
+Jarvis uses Orpheus for text-to-speech, converting responses back into spoken audio.
+Jarvis's long-term architecture plan includes ChromaDB for vector memory and Neo4j for a knowledge graph.
+Jarvis is built by Shubham as a 12-month project, inspired by Iron Man's AI assistant.
+Shubhams's dream is to make jarvis alive 
