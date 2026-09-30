@@ -7,14 +7,34 @@ capabilities and let it decide per-question, exactly like it already
 decides between calculate() and answering directly.
 """
 from rag import search_notes
+import ast
+import operator
 
+_OPERATORS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Pow: operator.pow,
+    ast.USub: operator.neg,
+}
+
+def _safe_eval(node):
+    if isinstance(node, ast.Constant):
+        return node.value
+    if isinstance(node, ast.BinOp):
+        return _OPERATORS[type(node.op)](_safe_eval(node.left), _safe_eval(node.right))
+    if isinstance(node, ast.UnaryOp):
+        return _OPERATORS[type(node.op)](_safe_eval(node.operand))
+    raise ValueError("Unsupported expression")
 
 def calculate(expression: str) -> str:
     try:
-        return str(eval(expression))
+        tree = ast.parse(expression, mode="eval")
+        result = _safe_eval(tree.body)
+        return str(result)
     except Exception as e:
         return f"Error: {e}"
-
 
 TOOLS_SCHEMA = [
     {
